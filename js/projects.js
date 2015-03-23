@@ -4,6 +4,7 @@ $(function(){
 	//Variables
 	var resizetextareas_to 	= null;
 	var savechanges_to 		= null;
+	var updatethumbnail_to  = null;
 	var dragging_el 		= null;
 	var saving				= false;
 
@@ -11,6 +12,9 @@ $(function(){
 	var unsaveddata 		= [];
 	var savingdata 			= [];
 	var project_els			= [];
+
+	var image_directories 	= {"thumbnail_image":"/img/project_thumbnails/", "client_logo":"/img/client_logos/"};
+
 
 	//Handlers
 	$("a.save-button").click( initsavechanges );
@@ -28,7 +32,9 @@ $(function(){
 		var project_id = _el.data("id"), project_data = [];
 
 		_el.find( "textarea" ).each( function(){
-			var col_name = $( this ).data( "column-name" );
+			var ta = $( this );
+			var col_name = ta.data( "column-name" );
+			var isthumnail = ta.hasClass( "thumbnail" );
 
 			project_data[ col_name ] 	= $( this ).val();
 
@@ -51,6 +57,8 @@ $(function(){
 				}
 
 				checkforunsavedchanges();
+
+				if(isthumnail) initupdatethumbnail( ta, col_name );
 			});
 		});
 
@@ -60,6 +68,20 @@ $(function(){
 
 		project_els[ project_id ] 	= _el;
 		data[ project_id ] 			= project_data;
+	}
+
+	function initupdatethumbnail( _ta, _col_name ){
+		clearTimeout(updatethumbnail_to);
+
+		updatethumbnail_to = setTimeout( updatethumbnail, 1000, _ta, _col_name );
+	}
+
+	function updatethumbnail( _ta, _col_name ){
+		console.log("updating thumbnail");
+
+		var img = _ta.parent().parent().children("img")[0];
+		var img_directory = image_directories[ _col_name ];
+		img.src = "http://" + client_domain + img_directory + _ta.val() + ".jpg";
 	}
 
 	function togglenewprojectform(){

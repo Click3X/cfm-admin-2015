@@ -7,12 +7,14 @@
 					<div class="project-thumbnails-inner">
 						<div class="project-thumbnail thumbnail">
 							<div class="thumbnail-inner">
-								<img src="http://<?php echo $this->config->item('client_domain'); ?>/img/project_thumbnails/<?php echo $project->thumbnail_image; ?>.jpg" />
+								<img id="thumbnail_image" src="http://<?php echo $this->config->item('client_domain'); ?>/img/project_thumbnails/<?php echo $project->thumbnail_image; ?>.jpg" />
+								<p><textarea class="thumbnail" data-border-offset="-22" data-column-name="thumbnail_image"><?php echo $project->thumbnail_image; ?></textarea></p>
 							</div>
 						</div>
 						<div class="client-logo thumbnail">
 							<div class="thumbnail-inner">
-								<img src="http://<?php echo $this->config->item('client_domain'); ?>/img/client_logos/<?php echo $project->client_logo; ?>.jpg" />
+								<img id="client_logo" src="http://<?php echo $this->config->item('client_domain'); ?>/img/client_logos/<?php echo $project->client_logo; ?>.jpg" />
+								<p><textarea class="thumbnail" data-border-offset="-22" data-column-name="client_logo"><?php echo $project->client_logo; ?></textarea></p>
 							</div>
 						</div>
 					</div>
