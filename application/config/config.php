@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url'] = '';
-$config['client_domain'] = (SITE == 'r2b' ? 'reason2be.com' : 'clickfiremedia.com');
+$config['client_domain'] = (SITE == 'r2b' ? 'staging.reason2be.com' : 'staging.clickfiremedia.com');
 
 /*
 |--------------------------------------------------------------------------
