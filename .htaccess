@@ -1,0 +1,33 @@
+#SITE
+SetEnvIf Host cfm.dev CI_SITE=cfm
+SetEnvIf Host admin.clickfiremedia.com CI_SITE=cfm
+
+SetEnvIf Host r2b.dev CI_SITE=r2b
+SetEnvIf Host admin.reason2be.com CI_SITE=r2b
+
+#ENV
+SetEnvIf Host dev$ CI_ENV=local
+
+AddType video/ogg   .ogv
+AddType video/mp4   .mp4
+AddType video/webm  .webm
+
+<IfModule mod_rewrite.c>
+    Options +FollowSymlinks
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} ^system.*
+    RewriteRule ^(.*)$ /index.php?/$1 [L]
+    RewriteCond %{REQUEST_URI} ^application.*
+    RewriteRule ^(.*)$ /index.php?/$1 [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php?/$1 [L]
+</IfModule>
+<IfModule !mod_rewrite.c>
+     ErrorDocument 404 /index.php
+</IfModule>
+
+AuthType Basic
+AuthName "Restricted Area"
+AuthUserFile /Users/jason/Sites/cfm-admin-2015/.htpasswd
+require valid-user

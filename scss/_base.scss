@@ -1,0 +1,98 @@
+/**
+ * Base Styles
+ */
+
+html{
+	font-family:"calluna";
+	font-weight:200;
+	font-size: 16px;
+	line-height:22px;
+	background-color:#FFF;
+	height:100%;
+	overflow:auto;
+	height: auto;
+	color:#555;
+}
+
+body{
+	height:100%;
+	overflow:hidden;
+}
+
+h1,h2,h3,h4,h5,h6,strong,b{
+	margin:0 0 0 0;
+	font-weight: normal;
+	color:#444;
+	font-family: "gotham-light";
+	letter-spacing:-1px;
+}
+
+h1{
+	font-family: "gotham-light";
+	text-transform:uppercase;
+	font-size:30px; line-height:30px;
+	text-align:center;
+}
+
+h2{
+	font-size:24px; line-height:30px;
+	margin-bottom:0px;
+	font-family: "gotham-book";
+	text-align:left;
+	color:$cfmred;
+}
+
+h3{
+	color:#666;
+	font-size:36px; line-height:42px;
+	margin-bottom:10px;
+	text-align:left;
+}
+
+p{
+	margin:0; padding:0;
+	margin-bottom:10px;
+	text-align:left;
+}
+
+a:link, a:visited{
+	color:#777;
+}
+
+a:hover{
+	color:#222;
+}
+
+a.button{
+	padding:20px;
+	color: #FFF;
+	cursor:pointer;
+	font-family:"gotham-light";
+	background-color: $cfmred;
+	line-height:20px;
+	padding:6px 14px 4px 14px;
+
+	&:hover{
+		color: #FFF;
+		background-color:#222;
+	}
+}
+
+textarea,input[type='text']{
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+	border-sizing:content-box;
+	white-space:inherit;
+	line-height: inherit;
+	margin:inherit; padding:inherit;
+	background-color:inherit;
+	text-align: inherit;
+}
+
+textarea{
+	width: 100%;
+	overflow: hidden;
+	height:10px;
+	border:0;
+}
