@@ -237,15 +237,20 @@ $(function(){
 		if( !saving ){
 			console.log("deleting project", _project_id);
 
-			clearTimeout( savechanges_to );
+			var verify = confirm("Are you sure you want to delete this project? This cannot be undone.");
+			if (verify == true) {
+			    clearTimeout( savechanges_to );
 
-			disable();
+				disable();
 
-			savingdata = _project_id;
+				savingdata = _project_id;
 
-			saving = true;
+				saving = true;
 
-			savechanges_to = setTimeout( deleteproject, 100 );
+				savechanges_to = setTimeout( deleteproject, 100 );
+			} else {
+			    console.log("Delete project request cancelled.");
+			}
 		} else {
 			console.log("busy...");
 		}
