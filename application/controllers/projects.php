@@ -24,11 +24,12 @@
 			parent::__construct();
 
 			$this->load->model("projects_model");
-			$this->load->model("projects_category_lu_model");
-			$this->load->model("projects_link_lu_model");
-			$this->load->model("projects_asset_lu_model");
-			$this->load->model("assets_media_lu_model");
-			$this->load->model("assets_model");
+			$this->load->model("project_category_lu_model");
+			$this->load->model("project_link_lu_model");
+			$this->load->model("project_module_lu_model");
+			$this->load->model("module_media_lu_model");
+			$this->load->model("modules_model");
+			$this->load->model("media_model");
 
 			$this->load->model("category_model");
 
@@ -42,10 +43,34 @@
 
 		public function category( $category_name ){
 			$projects = $this->projects_model->get_all_by_category( $category_name );
-			$category = $this->category_model->get( array("category_name"=>$category_name) );
+
+			foreach( $projects as $key=>$project ){
+				$project->modules = $this->modules_model->get( array( "project_id"=>$project->project_id ) );
+
+				foreach( $project->modules as $key=>$module ){
+					$module->media = $this->media_model->get( array( "module_id"=>$module->module_id ) );
+				}
+			}
+
+			$category = $this->category_model->get( array( "category_name"=>$category_name ) );
 			$category = $category[0];
 
 			$this->load->view( 'projects_view', array( "projects"=>$projects, "categories"=>$this->categories, "category"=>$category ) );
+		}
+
+		public function modules( $project_id ){
+			$project = $this->projects_model->get( array( "id"=>$project_id ) );
+			$project = $project[0];
+
+			$modules = $this->modules_model->get( array( "project_id"=>$project_id ) );
+
+			foreach ($modules as $key => $module) {
+				$module->media = $this->media_model->get( array( "module_id"=>$module->module_id ) );
+			}
+
+			$data = array( "project"=>$project, "modules"=>$modules );
+
+			$this->load->view( "project_modules_view", $data );
 		}
 
 		public function update(){
@@ -82,7 +107,7 @@
 			$project 		= $project[0];
 
 			//add category lu record
-			$cat_lu_id 		= $this->projects_category_lu_model->add( array( "project_id"=>$project_id, "category_id"=>$category_id ) );
+			$cat_lu_id 		= $this->project_category_lu_model->add( array( "project_id"=>$project_id, "category_id"=>$category_id ) );
 
 			//get the project html template
 			$response 		= $this->load->view("project_template_view", array("project"=>$project), true);
@@ -99,36 +124,36 @@
 			$response[ "projresp" ] 			= $this->projects_model->delete( "id", $project_id );
 
 			//remove category lookup records with that project id
-			$response[ "catluresp" ] 			= $this->projects_category_lu_model->delete( "project_id", $project_id );
+			$response[ "catluresp" ] 			= $this->project_category_lu_model->delete( "project_id", $project_id );
 
 			//remove link lookup records with that project id
-			$response[ "linkluresp" ] 			= $this->projects_link_lu_model->delete( "project_id", $project_id );
+			$response[ "linkluresp" ] 			= $this->project_link_lu_model->delete( "project_id", $project_id );
 
-			//remove assets associated with that project id
+			//remove modules associated with that project id
 			//first get all of the lookup records;
-			$response[ "assetlurecords" ] 		= $this->projects_asset_lu_model->get( array( "project_id"=>$project_id ) );
+			$response[ "modulelurecords" ] 		= $this->project_module_lu_model->get( array( "project_id"=>$project_id ) );
 
 			//loop through the lookup records
-			foreach( $response[ "assetlurecords" ] as $key => $record ) {
-				$this->deleteasset( $record->asset_id );
+			foreach( $response[ "modulelurecords" ] as $key => $record ) {
+				$this->deletemodule( $record->module_id );
 			}
 
 			echo json_encode( $response );
 		}
 
-		public function deleteasset( $assetid ){
+		public function deletemodule( $moduleid ){
 			$response = array();
 
-			//remove asset
-			$assetresponse = $this->assets_model->delete( "id", $assetid );
-			$response["assetresponse"] = $assetresponse;
+			//remove module
+			$moduleresponse = $this->modules_model->delete( "id", $moduleid );
+			$response["moduleresponse"] = $moduleresponse;
 
-			//remove project lookup records for this asset
-			$assetluresponse = $this->projects_asset_lu_model->delete( "asset_id", $assetid );
-			$response["assetluresponse"] = $assetluresponse;
+			//remove project lookup records for this module
+			$moduleluresponse = $this->project_module_lu_model->delete( "module_id", $moduleid );
+			$response["moduleluresponse"] = $moduleluresponse;
 
-			//remove media lookup records for this asset
-			$medialuresponse = $this->assets_media_lu_model->delete( "asset_id", $assetid );
+			//remove media lookup records for this module
+			$medialuresponse = $this->module_media_lu_model->delete( "module_id", $moduleid );
 			$response["medialuresponse"] = $medialuresponse;
 
 			return $response;

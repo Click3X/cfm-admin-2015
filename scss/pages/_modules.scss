@@ -1,0 +1,47 @@
+.module-container{
+	padding:40px;
+
+	.module{
+		margin-top:40px;
+		h2{
+			margin-bottom: 20px;
+		}
+
+		.media-container{
+			.media{
+				position: relative;
+
+				video,img{
+					width: 100%;
+					height: auto;
+				}
+
+				input{
+					position: absolute;
+					z-index: 2;
+					top:0;
+					left:0;
+					background:rgba(255,255,255,.9);
+					border:none;
+					width: 100%;
+				}
+			}
+		}
+
+		&.gallery{
+			.media-container{
+				@include clearfix();
+
+				.media{
+					float: left;
+					width: 25%;
+
+					video,img{
+						width: 100%;
+						height: auto;
+					}
+				}
+			}
+		}
+	}
+}
