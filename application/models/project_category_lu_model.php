@@ -4,7 +4,7 @@
 	{
 		public function Project_Category_Lu_Model()
 		{
-			$this->table = "projects_category_lu";
+			$this->table = "project_category_lu";
 			$this->pk = "id";
 		}
 	}
