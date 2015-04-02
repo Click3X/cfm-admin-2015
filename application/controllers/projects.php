@@ -58,20 +58,20 @@
 			$this->load->view( 'projects_view', array( "projects"=>$projects, "categories"=>$this->categories, "category"=>$category ) );
 		}
 
-		// public function modules( $project_id ){
-		// 	$project = $this->projects_model->get( array( "id"=>$project_id ) );
-		// 	$project = $project[0];
+		public function modules( $project_id ){
+			$project = $this->projects_model->get( array( "id"=>$project_id ) );
+			$project = $project[0];
 
-		// 	$modules = $this->modules_model->get( array( "project_id"=>$project_id ) );
+			$modules = $this->modules_model->get( array( "project_id"=>$project_id ) );
 
-		// 	foreach ($modules as $key => $module) {
-		// 		$module->media = $this->media_model->get( array( "module_id"=>$module->module_id ) );
-		// 	}
+			foreach ($modules as $key => $module) {
+				$module->media = $this->media_model->get( array( "module_id"=>$module->module_id ) );
+			}
 
-		// 	$data = array( "project"=>$project, "modules"=>$modules );
+			$data = array( "project"=>$project, "modules"=>$modules );
 
-		// 	$this->load->view( "project_modules_view", $data );
-		// }
+			$this->load->view( "project_modules_view", $data );
+		}
 
 		public function update(){
 			$data = $this->input->post( "data" );
