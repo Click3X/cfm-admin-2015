@@ -58,6 +58,7 @@
 			$this->load->view( 'projects_view', array( "projects"=>$projects, "categories"=>$this->categories, "category"=>$category ) );
 		}
 
+
 		public function modules( $project_id ){
 			$project = $this->projects_model->get( array( "id"=>$project_id ) );
 			$project = $project[0];
@@ -73,6 +74,122 @@
 			$this->load->view( "project_modules_view", $data );
 		}
 
+
+		public function saveModule() {
+
+			$this->load->library('form_validation');
+			// add banner image
+			if (isset($_POST['banner-image'])) {
+
+					$header_moduleid = $this->modules_model->add( array( "module_type_id"=>1, "subhead"=>$_POST['banner-image-subhead'] ) );
+					// $response["header_moduleid"] = $header_moduleid;
+					// //add media
+					$header_meidaid = $this->media_model->add( array( "media_type_id"=>$_POST['media-type'], "filename"=>$_POST['banner-image'] ) );
+
+					// $response["header_meidaid"] = $header_meidaid;
+					//add module media lu
+					$header_medialuid = $this->module_media_lu_model->add( array( "module_id"=>$header_moduleid, "media_id"=>$header_meidaid ) );
+					// $response["header_medialuid"] = $header_medialuid;
+					//add project module lu
+					$header_moduleluid = $this->project_module_lu_model->add( array( "project_id"=>$_POST['project_id'], "module_id"=>$header_moduleid ) );
+					// $response["header_moduleluid"] = $header_moduleluid;
+
+					redirect('projects/modules/'. $_POST['project_id'], 'refresh');
+
+			}
+			// add banner video
+			else if (isset($_POST['banner-video'])) {
+
+					$video_moduleid = $this->modules_model->add( array( "module_type_id"=>2, "title"=>$_POST['banner-video-title'], "subhead"=>$_POST['banner-video-subhead'] ) );
+					// $response["video_moduleid"] = $video_moduleid;
+					//add media
+					$video_mediaid = $this->media_model->add( array( "media_type_id"=>2, "filename"=>$_POST['banner-video'] ) );
+					// $response["video_mediaid"] = $video_mediaid;
+					//add module media lu
+					$video_medialuid = $this->module_media_lu_model->add( array( "module_id"=>$video_moduleid, "media_id"=>$video_mediaid ) );
+					// $response["video_medialuid"] = $video_medialuid;
+					//add project module lu
+					$video_moduleluid = $this->project_module_lu_model->add( array( "project_id"=>$_POST['project_id'], "module_id"=>$video_moduleid ) );
+					// $response["video_moduleluid"] = $video_moduleluid;
+
+					redirect('projects/modules/'. $_POST['project_id'], 'refresh');
+
+			}
+
+			// add gallery image(s)
+			else if (isset($_POST['gallery'])) {
+				$filenames = $_POST['gallery'];
+				$media_types = $_POST['media-type'];
+				$titles = $_POST['gallery-title'];
+				$links = $_POST['gallery-link'];
+				$media_info = array();
+					// add gallery module
+					$gallery_moduleid = $this->modules_model->add( array( "module_type_id"=>5, "subhead"=>$_POST['gallery-subhead'] ) );
+
+					// //add project module lu
+					$gallery_moduleluid = $this->project_module_lu_model->add( array( "project_id"=>$_POST['project_id'], "module_id"=>$gallery_moduleid ) );
+					
+					// push mediatype, title, and subhead into a new array $media_info
+					$max = sizeof($filenames);
+
+					for ($i = 0; $i < $max; $i++) {
+						$media_info[$i] = array('media-type' => $media_types[$i], 'media-title' => $titles[$i], 'media-link' => $links[$i]);
+					}
+					
+					// combine gallary and media-type arrays
+					$gallery_files = array_combine($filenames, $media_info);
+					// echo '<pre>';
+					// print_r($gallery_files);
+					// echo '</pre>';
+
+					
+					foreach( $gallery_files as $filename => $media_info ) {
+						// replace empty string with NULL
+						$media_info = array_map(function($value) {
+						   return $value === "" ? NULL : $value;
+						}, $media_info); 
+						// add media(s)
+						$gallery_mediaid = $this->media_model->add( array( "media_type_id"=>$media_info['media-type'], "title" => $media_info['media-title'], "href" => $media_info['media-link'], "filename"=>$filename ) );	
+						// echo 'gallery_mediaid: ' . $gallery_mediaid . '<br>';
+
+						// add module media lu(s)	
+						$gallery_medialuid = $this->module_media_lu_model->add( array( "module_id"=>$gallery_moduleid, "media_id"=>$gallery_mediaid ) );	
+						// echo 'gallery_media_lu_id: ' . $gallery_medialuid . '<br>';
+					}
+										
+					redirect('projects/modules/'. $_POST['project_id'], 'refresh');
+
+			}
+			
+		}
+
+		public function deletemodule( $module_id = null ) {			
+			if ( !empty( $_POST['module_id']) ){
+				$module_id = $_POST['module_id'];
+			}
+
+			//remove module
+			$moduleresponse = $this->modules_model->delete( "id", $module_id );
+			// $response["moduleresponse"] = $moduleresponse;
+
+			//remove project lookup records for this module
+			$moduleluresponse = $this->project_module_lu_model->delete( "module_id", $module_id );
+			// $response["moduleluresponse"] = $moduleluresponse;
+
+			//remove media lookup records for this module
+			$medialuresponse = $this->module_media_lu_model->delete( "module_id", $module_id );
+
+				// echo $response;
+	
+
+		}
+
+		public function deleteGalleryMedia() {
+			$moduleid = $_POST['module_id'];
+			$mediaid = $_POST['media_id'];
+			$medialuresponse = $this->module_media_lu_model->delete( "media_id", $mediaid );
+		}
+
 		public function update(){
 			$data = $this->input->post( "data" );
 
@@ -86,7 +203,18 @@
 
 			$reponse = $this->projects_model->update_batch( $batch );
 
-			echo json_encode( $reponse );
+			// echo json_encode( $reponse );
+		}
+
+		public function togglePublish() {
+			echo 'the function is triggered';
+			$datapublish = $_POST['datapublish'];
+			$project_id = $_POST['project_id'];
+			$updatedata = array("published" => $datapublish);
+			print_r($datapublish) ;
+			print_r($updatedata) ;
+			$reponse = $this->projects_model->update_record( $project_id, $updatedata );
+			print_r($reponse);
 		}
 
 		public function add(){
@@ -112,7 +240,7 @@
 			//get the project html template
 			$response 		= $this->load->view("project_template_view", array("project"=>$project), true);
 			
-			echo $response;
+			// echo $response;
 		}
 
 		public function delete(){
@@ -138,24 +266,8 @@
 				$this->deletemodule( $record->module_id );
 			}
 
-			echo json_encode( $response );
+			// echo json_encode( $response );
 		}
 
-		public function deletemodule( $moduleid ){
-			$response = array();
 
-			//remove module
-			$moduleresponse = $this->modules_model->delete( "id", $moduleid );
-			$response["moduleresponse"] = $moduleresponse;
-
-			//remove project lookup records for this module
-			$moduleluresponse = $this->project_module_lu_model->delete( "module_id", $moduleid );
-			$response["moduleluresponse"] = $moduleluresponse;
-
-			//remove media lookup records for this module
-			$medialuresponse = $this->module_media_lu_model->delete( "module_id", $moduleid );
-			$response["medialuresponse"] = $medialuresponse;
-
-			return $response;
-		}
 	}

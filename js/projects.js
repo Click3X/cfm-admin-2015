@@ -20,6 +20,47 @@ $(function(){
 	$("a.save-button").click( initsavechanges );
 	$("a.add-toggle-button").click( togglenewprojectform );
 	$("a.add-button").click( initaddproject );
+	$("a.edit-modules-button").click(function(){
+		var project_id = $(this).data("project-id");
+		window.location.href = base_url + "projects/modules/" + project_id;
+	});
+
+	$('.published').click(function() {
+        console.log('onclick');
+    });
+
+    $('.published').change(function() {
+        console.log('onchange');
+    });
+
+	// CHANGE PUBLISH TO DRAFT
+	$('.unchecked-btn, .checked-btn').click(function(){
+		$(this).addClass('button checked-btn');
+		$(this).removeClass('unchecked-btn');
+		$(this).siblings().addClass('unchecked-btn');
+		$(this).siblings().removeClass('button checked-btn');
+
+		
+		var data_publish = $(this).data("publish");
+		
+		var pjid = $(this).data("project-id");
+		var data = {
+			datapublish: data_publish,
+			project_id: pjid
+		};
+
+		console.log(data);
+		$.ajax({
+	        type: 'POST',
+	        url: base_url + "projects/togglePublish",
+	        data: data,
+	        dataType: "text",
+	        success: function( data ) {
+	            console.log( data );
+	        }
+	    });
+
+	});
 
 	//Methods
 	function populatetextareadata(){
@@ -214,7 +255,7 @@ $(function(){
 			type:"POST",
 			url: base_url + "projects/update",
 			data:{data:savingdata},
-		    dataType: "json",
+		    dataType: "text",
 	        success: function(reponse) {
 	            console.log('Save changes success: ');
 	            console.log(reponse);
@@ -282,7 +323,7 @@ $(function(){
 			type:"POST",
 			url: base_url + "projects/delete",
 			data:{ id: savingdata },
-		    dataType: "json",
+		    dataType: "text",
 	        success: function(reponse) {
 	            console.log('Delete project success: ');
 	            console.log(reponse);

@@ -56,6 +56,15 @@ class C3X_Model extends CI_Model
 		
 		return $this->db->affected_rows();
 	}
+
+	function update_record($projectid, $updatedata) {
+		$this->db->where("id",$projectid);
+		$this->db->update($this->table,$updatedata); 
+		
+		// $this->db->set('id',$projectid); 
+		// $this->db->insert($this->table); 
+		return $this->db->affected_rows();
+	}
 }
 
 ?>

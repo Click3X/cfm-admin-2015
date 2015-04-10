@@ -2,6 +2,7 @@
 	padding:40px;
 
 	.module{
+		position: relative;
 		margin-top:40px;
 		h2{
 			margin-bottom: 20px;
@@ -44,4 +45,144 @@
 			}
 		}
 	}
+}
+
+.select-container {
+	position: static;
+	.add-module-button {
+		position: absolute;
+		left: 190px;
+		text-decoration: none;
+		opacity: 0.5;
+		cursor: default;
+	}
+
+	.back-button {
+		display: inline-block;
+  		margin-right: 30px;
+  		text-decoration: none;
+	}
+}
+
+.modal-container {
+	width: 600px;
+	padding: 2em;
+	box-shadow: 1px 1px 3px rgba(0,0,0,0.35);
+	background-color: white;
+	hr {
+		width: 85%;
+		margin: 1.5em 0;
+	}
+
+	h2 {
+		text-transform: uppercase;
+		margin-bottom: 10px;
+	}
+
+	a {
+		text-decoration: none;
+		display: inline-block;
+	}
+
+	div	{
+		margin-top: 20px;
+	}
+
+	input[type='text'] {
+		margin: auto;
+		line-height: 30px;
+		line-height: 20px;
+		padding: 10px;
+		border: 1px solid #aaa;
+		width: 70%;
+	}
+
+	#gallery-input-container {
+		margin-bottom: 20px;
+	}
+
+	.gallery-delete-button {
+		margin-top: 10px;
+	}
+
+	.gallery-added {
+		margin-top: 10px !important;
+	}
+}
+
+.delete-module-button {
+	position: absolute;
+	top:0;
+	z-index: 2;
+	right: 0;
+}
+
+.save-modal {
+	color: #FFF;
+	cursor: pointer;
+	font-family: "gotham-light";
+	background-color: #a00;
+	line-height: 20px;
+	padding: 6px 14px 4px 14px;
+	border: none;
+}
+
+.media-type {
+	border: none;
+  background: none;
+  color: #666;
+  height: 30px;
+  text-transform: uppercase;
+  font-family: "gotham-light";
+  padding: 0;
+}
+
+#gallery-head {
+  	display: inline-block;
+}
+
+.add-gallery-img-button {
+	margin-left: 10px;
+}
+
+.module-filename {
+	position: absolute;
+	  z-index: 2;
+	  top: 0;
+	  left: 0;
+	  background: rgba(255,255,255,0.9);
+	  width: 100%;
+}
+
+.delete-gallery-media-button {
+	border-radius: 50%;
+	display: inline-block;
+	position: absolute;
+	top:3px;
+	right: 3px;
+	z-index: 3;
+	width: 30px;
+	height: 30px;
+	padding: 0 !important;
+	text-align: center;
+	line-height: 30px !important;
+}
+
+.gallery-media {
+	position: relative;
+}
+
+.module.gallery .media-container {
+	max-width: 90%;
+}
+
+.publish-text {
+	display: inline-block;
+	margin-top: 10px;
+}
+
+.unchecked-btn {
+	border: 1px solid #aaa;
+	display: inline-block;
+	cursor: pointer;
 }

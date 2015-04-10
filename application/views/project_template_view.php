@@ -18,7 +18,19 @@
 							</div>
 						</div>
 					</div>
+					<!-- GO TO MODULES PAGE -->
+					<a data-project-id="<?php echo $project->id; ?>" class="edit-modules-button button">Edit Modules</a><br>
+					<!-- SHOW / HIDE PROJECTS -->
+					<div class="toggle-container">
+						<a class="checked-btn button" data-publish="on" data-project-id="<?php echo $project->id; ?>">Published</a>
+						<a class="unchecked-btn" data-publish="off" data-project-id="<?php echo $project->id; ?>">Draft</a>
+					</div>
+
+					<label class="publish-text">Published: </label>
+					<input type="checkbox" class="published" checked="checked" />
+
 				</div>
+
 				<div class="project-about">
 					<?php 
 						$desc = $project->description;
@@ -30,6 +42,7 @@
 						<h2><textarea data-border-offset="-30" data-column-name="heading"><?php echo $project->heading; ?></textarea></h2>
 						<h3><textarea data-border-offset="-42" data-column-name="subhead"><?php echo $project->subhead; ?></textarea></h3>
 						<p><textarea data-border-offset="-22" data-column-name="description"><?php echo $desc; ?></textarea></p>
+						
 					</div>
 				</div>
 			</div>
