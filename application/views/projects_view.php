@@ -15,6 +15,7 @@
         <script>
         	var base_url = "<?php echo base_url(); ?>";
         	var client_domain = "<?php echo $this->config->item('client_domain'); ?>";
+        	var site_id = "<?php echo SITE; ?>";
         </script>
 
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/main.css">
