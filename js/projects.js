@@ -24,21 +24,16 @@ $(function(){
 		var project_id = $(this).data("project-id");
 		window.location.href = base_url + "projects/modules/" + project_id;
 	});
+	$('input[name=datetime]').appendDtpicker();
+	$('input[name=datetime]').change(updateTime);
 
-	$('.published').click(function() {
-        console.log('onclick');
-    });
-
-    $('.published').change(function() {
-        console.log('onchange');
-    });
 
 	// CHANGE PUBLISH TO DRAFT
 	$('.unchecked-btn, .checked-btn').click(function(){
-		$(this).addClass('button checked-btn');
+		$(this).addClass('checked-btn');
 		$(this).removeClass('unchecked-btn');
 		$(this).siblings().addClass('unchecked-btn');
-		$(this).siblings().removeClass('button checked-btn');
+		$(this).siblings().removeClass('checked-btn');
 
 		
 		var data_publish = $(this).data("publish");
@@ -123,6 +118,28 @@ $(function(){
 		var img = _ta.parent().parent().children("img")[0];
 		var img_directory = image_directories[ _col_name ];
 		img.src = "http://" + client_domain + img_directory + _ta.val() + ".jpg";
+	}
+
+	function updateTime() {
+		console.log('date was changed');
+		// data = $(this).val();
+		var data = {
+			timedata: $(this).val(),
+			projectid: $(this).data("project-id")
+		};
+
+		// $(this).attr('value', $(this).val());
+
+		$.ajax({
+	        type: 'POST',
+	        url: base_url + "projects/updateTime",
+	        data: data,
+	        dataType: "text",
+	        success: function( data ) {
+	            console.log( data );
+	        }
+	    });
+		
 	}
 
 	function togglenewprojectform(){

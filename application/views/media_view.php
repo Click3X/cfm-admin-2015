@@ -18,7 +18,6 @@
         </script>
 
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/main.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>css/jquery.simple-dtpicker.css">
 	</head>
 	<body>
 		<div class="toolbar">
@@ -27,11 +26,9 @@
 				<option value="<?php echo base_url(); ?>projects/category/<?php echo $c->category_name; ?>" <?php echo ( $c->category_name == $category->category_name ) ? 'selected' : ''; ?> ><?php echo $c->category_name; ?></option>
 				<?php endforeach; ?>
 			</select>
-			<a class="view-media-button button" href="<?php echo base_url(); ?>media">VIEW ALL MEDIA</a>
+			<a class="view-media-button button">VIEW ALL MEDIA</a>
 			<a class="add-toggle-button button">+</a>
 			<a class="save-button button">SAVE</a>
-			<!-- <input class="view-toggle" type="radio" name="view" value="details" checked /><label>Details</label>
-			<input class="view-toggle" type="radio" name="view" value="list" /><label>List</label> -->
 			<div class="addproject-panel">
 				<form id="addproject-form">
 					<input type="hidden" value="0" name="order" />
@@ -50,18 +47,17 @@
 			</div>
 		</div>
 
-		<div class="projects-container">
-			<div class="projects-container-inner">
-				<ul class="projects-list">
-					<?php foreach ($projects as $k => $p): ?>
-					<?php $this->load->view( "project_template_view", array("project"=>$p) ); ?>
-					<?php endforeach; ?>
+		<div class="media-library-container">
+			<div class="media-library-inner">
+				<ul class="media-list">
+					<?php //foreach ($projects as $k => $p): ?>
+					<?php //$this->load->view( "project_template_view", array("project"=>$p) ); ?>
+					<?php //endforeach; ?>
 				</ul>
 			</div>
 		</div>
 		<script src='<?php echo base_url(); ?>js/vendor/jquery-1.11.2.min.js'></script>
         <script src='<?php echo base_url(); ?>js/vendor/jquery.autosize.js'></script>
-        <script src="<?php echo base_url(); ?>js/projects.js"></script>
-        <script src="<?php echo base_url(); ?>js/vendor/jquery.simple-dtpicker.js"></script>
+        <script src="<?php echo base_url(); ?>js/media.js"></script>
 	</body>
 </html>

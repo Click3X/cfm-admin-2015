@@ -90,7 +90,6 @@
 
 	input[type='text'] {
 		margin: auto;
-		line-height: 30px;
 		line-height: 20px;
 		padding: 10px;
 		border: 1px solid #aaa;
@@ -181,8 +180,54 @@
 	margin-top: 10px;
 }
 
-.unchecked-btn {
-	border: 1px solid #aaa;
+.unchecked-btn, .checked-btn {
 	display: inline-block;
 	cursor: pointer;
+	color: white;
+	width: 60px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	font-family: gotham-light;
+}
+
+.checked-btn {
+	background-color: #a00;
+}
+
+.unchecked-btn {
+	background-color: #dddddd;
+}
+
+.unchecked-btn:hover, .checked-btn:hover {
+	color: white;
+}
+
+.publish-label, .toggle-container {
+	display: inline-block;
+	font-family: gotham-light;
+	
+}
+
+.publish-label {
+	margin-top: 20px;
+}
+
+.view-media-button {
+	position: absolute;
+	right: 70px;
+	text-decoration: none;
+}
+
+input[name='datetime'] {
+	font-family: gotham-light;
+	line-height: 20px;
+	padding: 10px;
+	border: 1px solid #aaa;
+}
+
+label[for='datetime'] {
+	display: block;
+	margin-top: 20px;
+	font-family: gotham-light;
 }

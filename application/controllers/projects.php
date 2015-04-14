@@ -74,6 +74,26 @@
 			$this->load->view( "project_modules_view", $data );
 		}
 
+		// media library
+		public function media(){
+
+			$media_jpg = $this->media_model->get( array( "media_type_id"=> 1 ) );
+			$media_png = $this->media_model->get( array( "media_type_id"=> 4 ) );
+			$media_gif = $this->media_model->get( array( "media_type_id"=> 3 ) );
+
+			$data = array( "media_type_id"=>$media_jpg );
+
+			$this->load->view( "media_view", $data );
+		}
+
+		// update date and time
+		public function updateTime() {
+			$datetime = $this->input->post('timedata');
+			$project_id = $this->input->post('projectid');
+			$updatedata = array("date_created" => $datetime);
+			$reponse = $this->projects_model->update_record( $project_id, $updatedata );
+		}
+
 
 		public function saveModule() {
 
@@ -207,12 +227,10 @@
 		}
 
 		public function togglePublish() {
-			echo 'the function is triggered';
+
 			$datapublish = $_POST['datapublish'];
 			$project_id = $_POST['project_id'];
 			$updatedata = array("published" => $datapublish);
-			print_r($datapublish) ;
-			print_r($updatedata) ;
 			$reponse = $this->projects_model->update_record( $project_id, $updatedata );
 			print_r($reponse);
 		}

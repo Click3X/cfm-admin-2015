@@ -21,13 +21,13 @@
 					<!-- GO TO MODULES PAGE -->
 					<a data-project-id="<?php echo $project->id; ?>" class="edit-modules-button button">Edit Modules</a><br>
 					<!-- SHOW / HIDE PROJECTS -->
+					<span class="publish-label">Published: </span>
 					<div class="toggle-container">
-						<a class="checked-btn button" data-publish="on" data-project-id="<?php echo $project->id; ?>">Published</a>
-						<a class="unchecked-btn" data-publish="off" data-project-id="<?php echo $project->id; ?>">Draft</a>
+						<a class="<?php echo ( $project->published == 'on') ? 'checked-btn' : 'unchecked-btn'; ?>" data-publish="on" data-project-id="<?php echo $project->id; ?>">YES</a>
+						<a class="<?php echo ( $project->published == 'on') ? 'unchecked-btn' : 'checked-btn'; ?>" data-publish="off" data-project-id="<?php echo $project->id; ?>">NO</a>
 					</div>
-
-					<label class="publish-text">Published: </label>
-					<input type="checkbox" class="published" checked="checked" />
+					<label for="datetime">Date Created: </label>
+					<input type="text" name="datetime" value="<?php echo $project->date_created; ?>" data-project-id="<?php echo $project->id; ?>">
 
 				</div>
 
