@@ -13,7 +13,7 @@ $(function(){
 	var savingdata 			= [];
 	var project_els			= [];
 
-	var image_directories 	= {"thumbnail_image":"/img/project_thumbnails/", "client_logo":"/img/client_logos/"};
+	var image_directories 	= {"thumbnail_image":"project_thumbnails", "client_logo":"client_logos"};
 
 
 	//Handlers
@@ -117,7 +117,7 @@ $(function(){
 
 		var img = _ta.parent().parent().children("img")[0];
 		var img_directory = image_directories[ _col_name ];
-		img.src = "http://media.click3x.com/images/" + site_id + "/" + img_directory + _ta.val() + ".jpg";
+		img.src = "http://media.click3x.com/images/" + site_id + "/" + img_directory + "/" + _ta.val() + ".jpg";
 	}
 
 	function updateTime() {
