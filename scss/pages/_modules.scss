@@ -219,6 +219,13 @@
 	text-decoration: none;
 }
 
+.edit-module-button {
+	position: absolute;
+	top: 0;
+	z-index: 2;
+	right: 50px;
+}
+
 input[name='datetime'] {
 	font-family: gotham-light;
 	line-height: 20px;

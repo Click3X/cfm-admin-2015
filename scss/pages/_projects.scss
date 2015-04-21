@@ -26,41 +26,11 @@
 	height:30px;
 	text-align:right;
 
-	.addproject-panel{
-		display: none;
-		background-color:#EEE;
-		padding:50px 20px 20px 20px;
-		max-width: 900px;
-		margin:0 0 0 auto;
-
-		form{
-			background-color:#FFF;
-			padding:40px 20px 20px;
-		}
-
-		p#slug{
-			margin-top: 10px;
-		}
-
-		fieldset{
-			margin-bottom: 20px;
-			text-align:center;
-		}
-
-		label{
-			margin-right:10px;
-		}
-
-		input{
-			box-shadow:none;
-		}
-	}
-
-	&.add-project-open{
-		.addproject-panel{
-			display: block;
-		}
-	}
+	// &.add-project-open{
+	// 	.addproject-panel{
+	// 		display: block;
+	// 	}
+	// }
 
 	select{
 		position: absolute; left:20px;
@@ -94,6 +64,37 @@
 		a.save-button{
 			display: inline-block;
 		}
+	}
+}
+
+// ADD PROJECT MODAL
+.addproject-panel{
+	// display: none;
+	background-color:#EEE;
+	padding:50px 20px 20px 20px;
+	max-width: 900px;
+	margin:0 0 0 auto;
+
+	form{
+		background-color:#FFF;
+		padding:40px 20px 20px;
+	}
+
+	p#slug{
+		margin-top: 10px;
+	}
+
+	fieldset{
+		margin-bottom: 20px;
+		text-align:center;
+	}
+
+	label{
+		margin-right:10px;
+	}
+
+	input{
+		box-shadow:none;
 	}
 }
 

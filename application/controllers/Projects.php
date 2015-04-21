@@ -75,16 +75,15 @@
 		}
 
 		// media library
-		public function media(){
+		// public function media(){
 
-			$media_jpg = $this->media_model->get( array( "media_type_id"=> 1 ) );
-			$media_png = $this->media_model->get( array( "media_type_id"=> 4 ) );
-			$media_gif = $this->media_model->get( array( "media_type_id"=> 3 ) );
+		// 	$media_jpg = $this->media_model->get( array( "media_type_id"=> 1 ) );
+		// 	$media_png = $this->media_model->get( array( "media_type_id"=> 4 ) );
+		// 	$media_gif = $this->media_model->get( array( "media_type_id"=> 3 ) );
+		// 	$data = array( "media_type_id"=>$media_jpg );
 
-			$data = array( "media_type_id"=>$media_jpg );
-
-			$this->load->view( "media_view", $data );
-		}
+		// 	$this->load->view( "media_view", $data );
+		// }
 
 		// update date and time
 		public function updateTime() {
@@ -224,6 +223,20 @@
 			$reponse = $this->projects_model->update_batch( $batch );
 
 			// echo json_encode( $reponse );
+		}
+
+		public function updateModule() {
+			echo 'i got it';
+			// $data = $_POST['banner-video'];
+			$data = $this->input->post();
+			// print_r($data);
+			$cur_column = $this->modules_model->get( array( "id"=>$data['module_id'] ) );
+			print_r($cur_column);
+			// foreach ( $data as $key => $value ) {
+				
+
+			// }
+
 		}
 
 		public function togglePublish() {

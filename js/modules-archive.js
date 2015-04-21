@@ -1,24 +1,14 @@
 $(function() {
 
-	var module_val,
-		data = {},
-		mdid,
-		pjid,
-		meid;
+	var module_val;
 
-	$('.add-module-button').click(addModule);
-	$(".save-modal").on('submit', saveModule);
-	$(".delete-module-button").click(deleteModule);
-	$('.cancel-modal').click(cancelModule);
-	$(".delete-gallery-media-button").click(deleteGalleryMedia);
-	$('.add-gallery-img-button').click(addGalleryImage);
     $('.modal-container').easyModal({
     	top: 200,
 		overlay: 0.2
     });
 
 
-	function addModule(e) {
+	$('.add-module-button').click(function(e) {
 
 		module_val = $('#module-selection').val();
 			
@@ -28,25 +18,25 @@ $(function() {
 		}
 		$('#' + target).trigger('openModal');
 		e.preventDefault();
-	}
+	});
 
 
-	function addGalleryImage() {
-		
+	$('.add-gallery-img-button').click(function(e) {
+		e.preventDefault();
 		$('#gallery-input-container').append('<div class="single-media-container"><hr><label >Enter gallery image file name (no extension):</label><br><input type="text" class="gallery-added" name="gallery[]"><select name="media-type[]" class="media-type"><option value="1">jpg</option><option value="3">gif</option><option value="4">png</option></select><br><label >Enter gallery title (appear as hover text):</label><br><input type="text" name="gallery-title[]" /><br><label >Enter gallery link:</label><br><input type="text" name="gallery-link[]" /></div><a class="gallery-delete-button button">-</a>');
 		
 		$('.gallery-delete-button').click(function() {			
 			$(this).prev().remove();
 			$(this).remove();
 		});
-	}
+	});
 
 
-	function cancelModule(e) {
+	$('.cancel-modal').click(function(e) {
 		$('.modal-container').trigger('closeModal');
-	}
+	});
 
-	function saveModule(e) {
+	$(".save-modal").on('submit', function(e){
 
 		e.preventDefault();
 
@@ -68,15 +58,16 @@ $(function() {
 	});
 
 	// DELETE A MODULE
-	function deleteModule() {
+	$(".delete-module-button").click(function(){
+		// console.log('going to delete a module');
 		
-		mdid = $(this).data("module-id");
-		pjid = $(this).data("project-id");
+		var mdid = $(this).data("module-id");
+		var pjid = $(this).data("project-id");
 
-		data = {
+		var data = {
 			module_id: mdid,
 			project_id: pjid
-		};
+			};
 		
 	    $.ajax({
 	        type: 'POST',
@@ -90,21 +81,22 @@ $(function() {
 
 	    location.reload();
 		
-	}
+	});
 
 	// DELETE A GALLERY MEDIA
-	function deleteGalleryMedia() {
+	$(".delete-gallery-media-button").click(function(){
+		// console.log('going to delete a module');
 		
-		mdid = $(this).data("module-id");
-		meid = $(this).data("media-id");
-		pjid = $(this).data("project-id");
+		var mdid = $(this).data("module-id");
+		var meid = $(this).data("media-id");
+		var pjid = $(this).data("project-id");
 
-		data = {
+		var data = {
 			module_id: mdid,
 			media_id: meid,
 			project_id: pjid
-		};
 
+			};
 		console.log(data);
 
 		if ($(this).parents('.module.gallery').find('.gallery-media').length == 1) {
@@ -136,7 +128,8 @@ $(function() {
 		}
 
 		
-	}
+	});
+
 
 
 });

@@ -13,57 +13,28 @@ $(function(){
 	var savingdata 			= [];
 	var project_els			= [];
 
-	var image_directories 	= {"thumbnail_image":"project_thumbnails", "client_logo":"client_logos"};
+	var image_directories 	= {"thumbnail_image":"/img/project_thumbnails/", "client_logo":"/img/client_logos/"};
 
 
 	//Handlers
 	$("a.save-button").click( initsavechanges );
 	// $("a.add-toggle-button").click( togglenewprojectform );
-	$("a.add-toggle-button").click( openModal );
 	$("a.add-button").click( initaddproject );
-	$('.unchecked-btn, .checked-btn').click(togglePublish);
 	$("a.edit-modules-button").click(function(){
 		var project_id = $(this).data("project-id");
 		window.location.href = base_url + "projects/modules/" + project_id;
 	});
-	$('input[name=datetime]').appendDtpicker();
-	$('input[name=datetime]').change(updateTime);
+	$('.datetime').appendDtpicker();
+	// $('input[name=datetime]').change(updateTime);
 	$('.modal-container').easyModal({
     	top: 200,
 		overlay: 0.2
     });
 
-    function openModal() {
-    	$('#add-project-modal').trigger('openModal');
-    }
+	$('.add-toggle-button').click(function(){
+		$('#add-project-modal').trigger('openModal');
+	});
 
-	// CHANGE PUBLISH TO DRAFT
-	function togglePublish() {
-		$(this).addClass('checked-btn');
-		$(this).removeClass('unchecked-btn');
-		$(this).siblings().addClass('unchecked-btn');
-		$(this).siblings().removeClass('checked-btn');
-		
-		var data_publish = $(this).data("publish");
-		
-		var pjid = $(this).data("project-id");
-		var data = {
-			datapublish: data_publish,
-			project_id: pjid
-		};
-
-		console.log(data);
-		$.ajax({
-	        type: 'POST',
-	        url: base_url + "projects/togglePublish",
-	        data: data,
-	        dataType: "text",
-	        success: function( data ) {
-	            console.log( data );
-	        }
-	    });
-
-	}
 
 	//Methods
 	function populatetextareadata(){
@@ -71,6 +42,7 @@ $(function(){
 			initializeproject( $(this) );
 		});
 	}
+
 
 	function initializeproject( _el ){
 		var project_id = _el.data("id"), project_data = [];
@@ -125,35 +97,13 @@ $(function(){
 
 		var img = _ta.parent().parent().children("img")[0];
 		var img_directory = image_directories[ _col_name ];
-		img.src = "http://media.click3x.com/images/" + site_id + "/" + img_directory + "/" + _ta.val() + ".jpg";
+		img.src = "http://" + client_domain + img_directory + _ta.val() + ".jpg";
 	}
 
-	function updateTime() {
-		console.log('date was changed');
-		// data = $(this).val();
-		var data = {
-			timedata: $(this).val(),
-			projectid: $(this).data("project-id")
-		};
-
-		// $(this).attr('value', $(this).val());
-
-		$.ajax({
-	        type: 'POST',
-	        url: base_url + "projects/updateTime",
-	        data: data,
-	        dataType: "text",
-	        success: function( data ) {
-	            console.log( data );
-	        }
-	    });
-		
+	function togglenewprojectform(){
+		$( ".toolbar" ).toggleClass( "add-project-open" );
+		initresizetextareas();
 	}
-
-	// function togglenewprojectform(){
-	// 	$( ".toolbar" ).toggleClass( "add-project-open" );
-	// 	initresizetextareas();
-	// }
 
 	function checkforunsavedchanges(){
 		if( Object.keys(unsaveddata).length > 0 ){
@@ -225,6 +175,7 @@ $(function(){
 	            // resizetextareas();
 
 	            setTimeout( addprojectcomplete, 200 );
+
 	        },
 	        error: function( e ) 
 	        {
@@ -281,7 +232,7 @@ $(function(){
 			type:"POST",
 			url: base_url + "projects/update",
 			data:{data:savingdata},
-		    dataType: "text",
+		    dataType: "json",
 	        success: function(reponse) {
 	            console.log('Save changes success: ');
 	            console.log(reponse);
@@ -349,7 +300,7 @@ $(function(){
 			type:"POST",
 			url: base_url + "projects/delete",
 			data:{ id: savingdata },
-		    dataType: "text",
+		    dataType: "json",
 	        success: function(reponse) {
 	            console.log('Delete project success: ');
 	            console.log(reponse);
@@ -392,6 +343,28 @@ $(function(){
 	function enable(){
 		$( "textarea" ).attr( "disabled", false );
 	}
+
+	// function updateTime() {
+	// 	console.log('date was changed');
+	// 	// data = $(this).val();
+	// 	var data = {
+	// 		timedata: $(this).val(),
+	// 		projectid: $(this).data("project-id")
+	// 	};
+
+	// 	// $(this).attr('value', $(this).val());
+
+	// 	$.ajax({
+	//         type: 'POST',
+	//         url: base_url + "projects/updateTime",
+	//         data: data,
+	//         dataType: "text",
+	//         success: function( data ) {
+	//             console.log( data );
+	//         }
+	//     });
+		
+	// }
 
 	//Init
 	initresizetextareas();

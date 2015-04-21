@@ -19,43 +19,7 @@
 
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/main.css">
 	</head>
-	<body>
-		<div class="toolbar">
-			<select onchange="location = this.options[this.selectedIndex].value;">
-				<?php foreach ($categories as $k => $c): ?>
-				<option value="<?php echo base_url(); ?>projects/category/<?php echo $c->category_name; ?>" <?php echo ( $c->category_name == $category->category_name ) ? 'selected' : ''; ?> ><?php echo $c->category_name; ?></option>
-				<?php endforeach; ?>
-			</select>
-			<a class="view-media-button button">VIEW ALL MEDIA</a>
-			<a class="add-toggle-button button">+</a>
-			<a class="save-button button">SAVE</a>
-			<div class="addproject-panel">
-				<form id="addproject-form">
-					<input type="hidden" value="0" name="order" />
-					<input type="hidden" value="default" name="client_logo" />
-					<input type="hidden" value="default" name="thumbnail_image" />
-					<input type="hidden" value="<?php echo $category->id; ?>" name="category_id" />
-					<fieldset>
-						<div class="project-title"><h1><textarea data-border-offset="-30" name="title">Title</textarea></h1></div>
-						<p id="slug"><textarea data-border-offset="-22" name="slug">slug</textarea></p>
-						<h2><textarea data-border-offset="-30" name="heading">Heading</textarea></h2>
-						<h3><textarea data-border-offset="-42" name="subhead">Subhead</textarea></h3>
-						<p><textarea data-border-offset="-22" name="description">Description</textarea></p>
-					</fieldset>
-					<a class="add-button button">ADD</a>
-				</form>
-			</div>
-		</div>
 
-		<div class="media-library-container">
-			<div class="media-library-inner">
-				<ul class="media-list">
-					<?php //foreach ($projects as $k => $p): ?>
-					<?php //$this->load->view( "project_template_view", array("project"=>$p) ); ?>
-					<?php //endforeach; ?>
-				</ul>
-			</div>
-		</div>
 		<script src='<?php echo base_url(); ?>js/vendor/jquery-1.11.2.min.js'></script>
         <script src='<?php echo base_url(); ?>js/vendor/jquery.autosize.js'></script>
         <script src="<?php echo base_url(); ?>js/media.js"></script>

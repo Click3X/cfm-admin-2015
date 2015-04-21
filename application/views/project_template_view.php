@@ -27,7 +27,7 @@
 						<a class="<?php echo ( $project->published == 'on') ? 'unchecked-btn' : 'checked-btn'; ?>" data-publish="off" data-project-id="<?php echo $project->id; ?>">NO</a>
 					</div>
 					<label for="datetime">Date Created: </label>
-					<input type="text" name="datetime" value="<?php echo $project->date_created; ?>" data-project-id="<?php echo $project->id; ?>">
+					<input type="text" name="datetime" class="datetime" value="<?php echo $project->date_created; ?>" data-project-id="<?php echo $project->id; ?>">
 
 				</div>
 
