@@ -47,7 +47,7 @@
 								<h2><?php echo strtoupper( $module->module_type_name ); ?></h2>
 								<div class="media-container">
 									<?php foreach ($module->media as $key => $media): ?> 
-
+									<h4 class="module-idname">Module ID: <?php echo $module->module_id; ?></h4>
 									<!-- if module is video or banner image -->
 									<?php if($module->module_type_name != "gallery") : ?>
 										<div class="media">
@@ -61,6 +61,7 @@
 											<?php endif; ?>
 											
 											<h4 class="module-filename"><?php echo $media->filename; ?></h4>
+											
 											<!-- <a class="delete-module-button button" data-module-id="<?php echo $module->module_id; ?>" data-project-id="<?php echo $project->id; ?>">X</a> -->
 										</div>
 
