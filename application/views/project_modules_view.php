@@ -46,10 +46,12 @@
 							<div class="module <?php echo $module->module_type_name; ?>">
 								<h2><?php echo strtoupper( $module->module_type_name ); ?></h2>
 								<div class="media-container">
-									<?php foreach ($module->media as $key => $media): ?> 
 									<h4 class="module-idname">Module ID: <?php echo $module->module_id; ?></h4>
+									<?php foreach ($module->media as $key => $media): ?> 
+									
 									<!-- if module is video or banner image -->
 									<?php if($module->module_type_name != "gallery") : ?>
+										
 										<div class="media">
 											<?php if($module->module_type_name == "banner-video") : ?>
 												<video width="700" height="394" controls poster="http://media.click3x.com/images/<?php echo SITE; ?>/modules/<?php echo $module->module_type_name."/".$media->filename.".jpg"; ?>">
@@ -87,6 +89,7 @@
 
 									<!-- if module is gallery -->
 									<?php else: ?>
+										
 										<div class="media gallery-media">
 											<div class="gallery-media-container">
 												<img src="http://media.click3x.com/images/<?php echo SITE; ?>/modules/<?php echo $module->module_type_name."/".$media->filename.".".$media->media_type_name; ?>" />
