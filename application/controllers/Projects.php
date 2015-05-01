@@ -226,16 +226,29 @@
 		}
 
 		public function updateModule() {
-			echo 'i got it';
-			// $data = $_POST['banner-video'];
 			$data = $this->input->post();
+			$filename = $data['filename'];
+			$mid = $data['module_id'];
+			unset($data['submit']);
+			unset($data['filename']);
 			// print_r($data);
-			$cur_column = $this->modules_model->get( array( "id"=>$data['module_id'] ) );
-			print_r($cur_column);
-			// foreach ( $data as $key => $value ) {
-				
+			
+			$cur_column = $this->modules_model->get( array( "module_id"=>$data['module_id'] ) );
+			$cur_column_media = $this->media_model->get( array( "module_id"=>$data['module_id'] ) );
+			$media_id = $cur_column_media[0]->media_id;
+			// print_r($cur_column_media[0]);
+			// echo $cur_column[0]->module_type_id;
+			
+			foreach ( $data as $key => $value ) {
+				if ($value !== $cur_column[0]->$key ) {
+					$module_response = $this->modules_model->update_record($mid, array($key => $value) );
+				}
+			}
 
-			// }
+			if ($filename !== $cur_column_media[0]->filename) {
+				$media_response = $this->media_model->update_record($media_id, array("filename" => $filename) );
+			}
+			
 
 		}
 

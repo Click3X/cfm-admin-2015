@@ -72,19 +72,24 @@
 											<h2>Edit <?php echo strtoupper( $module->module_type_name ); ?></h2>
 											
 											<?php echo form_open('projects/updateModule') ?>
-												<label for="<?php echo $module->module_type_name; ?>">Edit <?php echo $module->module_type_name; ?> file name:</label><br>
-												<input type="text" name="<?php echo $module->module_type_name; ?>" value="<?php echo $media->filename; ?>" required /><br>
-												<label for="<?php echo $module->module_type_name; ?>-title">Edit banner video play button text: </label><br>
-												<input type="text" name="<?php echo $module->module_type_name; ?>-title" value="<?php echo (!isset($module->title) || empty( $module->title )) ? '' : $module->title ; ?>"><br> 
-												<label for="<?php echo $module->module_type_name; ?>-subhead">Edit <?php echo $module->module_type_name; ?> heading: </label><br>
-												<input type="text" name="<?php echo $module->module_type_name; ?>-subhead" value="<?php echo (!isset($module->subhead) || empty( $module->subhead )) ? '' : $module->subhead ; ?>">
+												<label for="filename">Edit <?php echo $module->module_type_name; ?> file name:</label><br>
+												<input type="text" name="filename" value="<?php echo $media->filename; ?>" required /><br>
+
+												<label for="title">Edit play button text (if appliable): </label><br>
+												<input type="text" name="title" value="<?php echo (!isset($module->title) || empty( $module->title )) ? '' : $module->title ; ?>"><br> 
+
+												<label for="subhead">Edit sub heading: </label><br>
+												<input type="text" name="subhead" value="<?php echo (!isset($module->subhead) || empty( $module->subhead )) ? '' : $module->subhead ; ?>">
+
 												<input type="hidden" value="<?php echo $project->id; ?>" name="project_id">
+												<input type="hidden" value="<?php echo $module->module_id; ?>" name="module_id">
 												<div>
 													<input type="submit" name="submit" value="Save Changes" class="update-modal button" data-project-id="<?php echo $project->id; ?>" />
 													<a class="cancel-modal button">Cancel</a>
 												</div>
 											</form>
 										</div>
+
 										<!-- end of modal -->
 
 									<!-- if module is gallery -->
@@ -106,7 +111,7 @@
 									<?php endforeach; ?>
 								</div>
 								<a class="edit-module-button button" data-module-id="<?php echo $module->module_id; ?>" data-project-id="<?php echo $project->id; ?>" href="#edit-modal-<?php echo $module->module_id; ?>">EDIT</a>
-								<a class="delete-module-button button" data-module-id="<?php echo $module->module_id; ?>" data-project-id="<?php echo $project->id; ?>">X</a>
+								<a class="delete-module-button button" data-module-id="<?php echo $module->module_id; ?>" data-pr oject-id="<?php echo $project->id; ?>">X</a>
 							</div>
 						<?php endforeach; ?>
 						<!-- end of module foreach -->

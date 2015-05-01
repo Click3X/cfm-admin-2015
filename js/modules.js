@@ -75,10 +75,11 @@ $(function() {
 
 	function updateModule() {
 		console.log('click to update');
-		// data = {
+		data = {
 
 
-		// };
+		};
+		
 		
 		$.ajax({
 	        type: 'POST',
